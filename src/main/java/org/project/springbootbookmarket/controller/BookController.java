@@ -1,11 +1,14 @@
 package org.project.springbootbookmarket.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.project.springbootbookmarket.domain.Book;
 import org.project.springbootbookmarket.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +55,15 @@ public class BookController {
     public String requestBookByCategory(@PathVariable("category") String bookCategory, Model model) {
         List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
         model.addAttribute("bookList", booksByCategory);
+        return "books";
+    }
+
+    @GetMapping("/filter/{bookFilter}")
+    public String requestBookByFilter(
+            @MatrixVariable(pathVar = "bookFilter") Map<String, List<String>> bookFilter,
+            Model model) {
+        Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
+        model.addAttribute("bookList", booksByFilter);
         return "books";
     }
 }

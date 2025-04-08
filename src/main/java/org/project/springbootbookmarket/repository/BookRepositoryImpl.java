@@ -2,7 +2,11 @@ package org.project.springbootbookmarket.repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.project.springbootbookmarket.domain.Book;
 import org.springframework.stereotype.Repository;
 
@@ -69,5 +73,29 @@ public class BookRepositoryImpl implements BookRepository {
         return listOfBooks.stream()
                 .filter(book -> category.equalsIgnoreCase(book.getCategory()))
                 .toList();
+    }
+
+    @Override
+    public Set<Book> getBookListByFilter(Map<String, List<String>> filter) {
+        Set<Book> booksByPublisher = new HashSet<>();
+        Set<Book> booksByCategory = new HashSet<>();
+        Set<String> booksByFilter = filter.keySet();
+
+        if (booksByFilter.contains("publisher")) {
+            for (String publisherName : filter.get("publisher")) {
+                booksByPublisher = listOfBooks.stream()
+                        .filter(book -> publisherName.equalsIgnoreCase(book.getPublisher()))
+                        .collect(Collectors.toSet());
+            }
+        }
+        if (booksByFilter.contains("category")) {
+            filter.get("category").forEach(categoryName -> {
+                List<Book> list = getBookListByCategory(categoryName);
+                booksByCategory.addAll(list);
+            });
+        }
+
+        booksByCategory.retainAll(booksByPublisher);
+        return booksByCategory;
     }
 }
