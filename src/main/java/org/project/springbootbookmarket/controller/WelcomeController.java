@@ -13,7 +13,7 @@ public class WelcomeController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String welcomeMethod() throws IOException {
-        List<String> outHtmlLines = Files.readAllLines(Paths.get("src\\main\\resources\\static\\welcome.html"));
+        List<String> outHtmlLines = Files.readAllLines(Paths.get("src\\main\\resources\\templates\\welcome.html"));
 
         return String.join("\n", outHtmlLines);
     }
