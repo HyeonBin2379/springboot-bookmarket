@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-md-12">
-      <form action="/BookMarket/books/add" method="post" enctype="multipart/form-data">
+      <form th:object="${book}" action="/BookMarket/books/add" method="post" enctype="multipart/form-data">
         <legend>
           <span th:text="#{addBook.form.subtitle.label}"></span>
         </legend>
@@ -40,7 +40,10 @@
             <span th:text="#{addBook.form.bookId.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="bookId" class="form-control"/>
+            <input type="text" name="bookId" class="form-control" th:field="*{bookId}"/>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-danger" th:errors="*{bookId}"></p>
           </div>
         </div>
 
@@ -49,16 +52,22 @@
             <span th:text="#{addBook.form.name.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="name" class="form-control"/>
+            <input type="text" name="name" class="form-control" th:field="*{name}"/>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-danger" th:errors="*{name}"></p>
           </div>
         </div>
 
         <div class="mb-3 row">
           <label class="col-sm-2 control-label">
-            <span th:text="#{addBook.form.unitPrice.label}"></span>
+            <span th:text="#{addBook.form.unitPrice.label}" th:field="*{unitPrice}"></span>
           </label>
           <div class="col-sm-3">
             <input type="text" name="unitPrice" class="form-control"/>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-danger" th:errors="*{unitPrice}"></p>
           </div>
         </div>
 
@@ -76,7 +85,7 @@
             <span th:text="#{addBook.form.description.label}"></span>
           </label>
           <div class="col-sm-5">
-            <textarea type="text" name="description" cols="50" rows="2" class="form-control"></textarea>
+            <textarea type="text" name="description" cols="50" rows="2" class="form-control" th:field="*{description}"></textarea>
           </div>
         </div>
 
@@ -85,7 +94,7 @@
             <span th:text="#{addBook.form.publisher.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="publisher" class="form-control"/>
+            <input type="text" name="publisher" class="form-control" th:field="*{publisher}"/>
           </div>
         </div>
 
@@ -94,7 +103,7 @@
             <span th:text="#{addBook.form.category.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="category" class="form-control"/>
+            <input type="text" name="category" class="form-control" th:field="*{category}"/>
           </div>
         </div>
 
@@ -103,7 +112,10 @@
             <span th:text="#{addBook.form.unitsInStock.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="unitsInStock" class="form-control"/>
+            <input type="text" name="unitsInStock" class="form-control" th:field="*{unitsInStock}"/>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-danger" th:errors="*{unitsInStock}"></p>
           </div>
         </div>
 
@@ -112,7 +124,7 @@
             <span th:text="#{addBook.form.releaseDate.label}"></span>
           </label>
           <div class="col-sm-3">
-            <input type="text" name="releaseDate" class="form-control"/>
+            <input type="text" name="releaseDate" class="form-control" th:field="*{releaseDate}"/>
           </div>
         </div>
 
