@@ -17,80 +17,109 @@
 
   <div class="p-5 mb-4 bg-body-tertiary rounded-3">
     <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold">도서 등록</h1>
+      <h1 class="display-5 fw-bold">
+        <span th:text="#{addBook.form.title.label}"></span>
+      </h1>
       <p class="col-md-8 fs-4">BookMarket</p>
     </div>
   </div>
 
   <div class="row align-items-md-stretch">
+    <div class="text-end" style="padding-right: 30px">
+      <a href="?lang=ko" style="text-decoration-line: none">Korean</a> |
+      <a href="?lang=en" style="text-decoration-line: none">English</a>
+    </div>
+
     <div class="col-md-12">
       <form action="/BookMarket/books/add" method="post" enctype="multipart/form-data">
-        <legend>[[${addTitle}]]</legend>
+        <legend>
+          <span th:text="#{addBook.form.subtitle.label}"></span>
+        </legend>
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">도서ID</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.bookId.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="bookId" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">도서명</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.name.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="name" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">가격</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.unitPrice.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="unitPrice" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">저자</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.author.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="author" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">상세정보</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.description.label}"></span>
+          </label>
           <div class="col-sm-5">
             <textarea type="text" name="description" cols="50" rows="2" class="form-control"></textarea>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">출판사</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.publisher.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="publisher" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">분야</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.category.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="category" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">재고수</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.unitsInStock.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="unitsInStock" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">출판일</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.releaseDate.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="text" name="releaseDate" class="form-control"/>
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">상태</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.condition.label}"></span>
+          </label>
           <div class="col-sm-3">
             <input type="radio" name="condition" value="New"/> New
             <input type="radio" name="condition" value="Old"/> Old
@@ -99,7 +128,9 @@
         </div>
 
         <div class="mb-3 row">
-          <label class="col-sm-2 control-label">도서이미지</label>
+          <label class="col-sm-2 control-label">
+            <span th:text="#{addBook.form.bookImage.label}"></span>
+          </label>
           <div class="col-sm-7">
             <input type="file" name="bookImage" class="form-control"/>
           </div>
@@ -107,7 +138,7 @@
 
         <div class="mb-3 row">
           <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit" class="btn btn-primary" value="등록"/>
+            <input type="submit" class="btn btn-primary" th:value="#{addBook.form.button.label}"/>
           </div>
         </div>
       </form>
