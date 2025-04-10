@@ -30,7 +30,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Lombok 라이브러리 : 자바에서 반복 작성되는 메서드를 자동으로 작성
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     // 스프링부트 애플리케이션 테스트에 필요한 라이브러리 의존성 설정
