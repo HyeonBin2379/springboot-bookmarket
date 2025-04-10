@@ -12,7 +12,6 @@ import java.util.Set;
 import org.project.springbootbookmarket.domain.Book;
 import org.project.springbootbookmarket.service.BookService;
 import org.project.springbootbookmarket.validator.BookValidator;
-import org.project.springbootbookmarket.validator.UnitsInStockValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
