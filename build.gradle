@@ -15,7 +15,16 @@ java {
     }
 }
 
-// Gradle이 필요로 하는 라이브러리를 자동으로 다운로드하기 위한 저장소
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    configureEach { // Log4j2와의 충돌 방지를 위해 logback 삭제
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+// Gradle에서 필요로 하는 라이브러리를 자동으로 다운로드하기 위한 저장소
 repositories {
     mavenCentral()
 }
@@ -45,6 +54,9 @@ dependencies {
     // 스프링부트 애플리케이션 테스트에 필요한 라이브러리 의존성 설정
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // 로그 라이브러리 Log4j2 추가
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 }
 
 tasks.named('test') {

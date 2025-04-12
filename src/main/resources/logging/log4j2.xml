@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="INFO" monitorInterval="30">
+  <!-- 로그 출력 형식을 설정 -->
+  <Properties>
+    <property name="LOG_FORMAT">[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%c{1}:%L] - %m%n</property>
+    <property name="BASE_DIR">D:/logs</property>
+  </Properties>
+
+  <Appenders>
+    <!-- 콘솔창에 로그 정보를 출력하기 위한 설정 -->
+    <Console name="Console-Appender" target="SYSTEM_OUT" follow="true">
+      <PatternLayout pattern="${LOG_FORMAT}"/>
+    </Console>
+
+    <!-- 파일에 로그 정보를 출력하기 위한 각종 설정 추가 -->
+    <RollingFile name="File-Appender" fileName="${BASE_DIR}/monitor.log" filePattern="${BASE_DIR}/%d{yyyy-MM-dd}.log.zip">
+      <PatternLayout pattern="${LOG_FORMAT}"/>
+
+      <Policies>
+        <SizeBasedTriggeringPolicy size="15KB"/>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+      </Policies>
+
+      <DefaultRolloverStrategy>
+        <Delete basePath="${BASE_DIR}">
+          <IfAccumulatedFileCount exceeds="4"/>
+          <IfFileName glob="*.log"/>
+          <IfLastModified age="3d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+
+    <RollingFile name="Audit-Appender" fileName="${BASE_DIR}/audit.log" filePattern="${BASE_DIR}/%d{yyyy-MM-dd}.log.zip">
+      <PatternLayout pattern="${LOG_FORMAT}"/>
+
+      <Policies>
+        <SizeBasedTriggeringPolicy size="15KB"/>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+      </Policies>
+
+      <DefaultRolloverStrategy>
+        <Delete basePath="${BASE_DIR}">
+          <IfAccumulatedFileCount exceeds="4"/>
+          <IfFileName glob="*.log"/>
+          <IfLastModified age="3d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+  </Appenders>
+
+  <!-- Loggers에서는 모니터링할 범위를 지정
+       (패키지명이 올바르지 않으면 로그 파일 작성이 정상적으로 수행되지 않을 수 있음) -->
+  <Loggers name="org.project.springbootbookmarket">
+    <!-- org.project.springbootbookmarket 경로상의 모든 이벤트는 INFO 이상의 로그 레벨에서 Console-Appender의 설정사항을 준수 -->
+    <Root level="INFO">
+      <AppenderRef ref="Console-Appender"/>
+    </Root>
+
+    <!-- 요청 URL에 관한 접근이 발생할 때마다 File-Appender의 설정사항에 따라 monitor.log 파일에 로그를 작성-->
+    <Logger name="org.project.springbootbookmarket.interceptor.MonitoringInterceptor" level="INFO" additivity="true">
+      <AppenderRef ref="File-Appender"/>
+    </Logger>
+    <Logger name="org.project.springbootbookmarket.interceptor.AuditingInterceptor" level="INFO" additivity="true">
+      <AppenderRef ref="Audit-Appender"/>
+    </Logger>
+  </Loggers>
+</Configuration>
