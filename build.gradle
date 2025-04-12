@@ -27,10 +27,16 @@ dependencies {
 
     // 스프링부트를 사용한 RESTful 웹 서비스 개발에 필요한 라이브러리 의존성 설정 집합
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // 유효성 검사 관련 의존 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 스프링 시큐리티 관련 의존 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
     // Lombok 라이브러리 : 자바에서 반복 작성되는 메서드를 자동으로 작성
     implementation 'org.projectlombok:lombok'
