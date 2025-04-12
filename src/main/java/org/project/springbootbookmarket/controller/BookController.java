@@ -1,5 +1,6 @@
 package org.project.springbootbookmarket.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.io.File;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.project.springbootbookmarket.domain.Book;
+import org.project.springbootbookmarket.exception.BookIdException;
+import org.project.springbootbookmarket.exception.CategoryException;
 import org.project.springbootbookmarket.service.BookService;
 import org.project.springbootbookmarket.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
@@ -63,18 +67,21 @@ public class BookController {
         return modelAndView;
     }
 
+    @GetMapping("/{category}")
+    public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {
+        List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
+        if (booksByCategory == null || booksByCategory.isEmpty()) {
+            throw new CategoryException();
+        }
+        model.addAttribute("bookList", booksByCategory);
+        return "books";
+    }
+
     @GetMapping("/book")
     public String requestBookById(@RequestParam("id") String bookId, Model model) {
         Book bookById = bookService.getBookById(bookId);
         model.addAttribute("book", bookById);
         return "book";
-    }
-
-    @GetMapping("/{category}")
-    public String requestBookByCategory(@PathVariable("category") String bookCategory, Model model) {
-        List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
-        model.addAttribute("bookList", booksByCategory);
-        return "books";
     }
 
     @GetMapping("/filter/{bookFilter}")
@@ -141,5 +148,17 @@ public class BookController {
                 "publisher", "category", "unitsInStock", "totalPages", "releaseDate",
                 "condition", "fileName", "bookImage");
         binder.setValidator(bookValidator);
+    }
+
+    @ExceptionHandler(value = BookIdException.class)
+    public ModelAndView handleError(HttpServletRequest req, BookIdException exception) {
+        ModelAndView mav = new ModelAndView();
+
+        mav.addObject("invalidBookId", exception.getBookId());
+        mav.addObject("exception", exception);
+        mav.addObject("url", req.getRequestURL() + "?" + req.getQueryString());
+        mav.setViewName("errorBook");
+
+        return mav;
     }
 }
