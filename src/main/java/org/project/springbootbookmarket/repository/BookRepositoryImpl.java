@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.project.springbootbookmarket.domain.Book;
+import org.project.springbootbookmarket.exception.BookIdException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -68,7 +69,7 @@ public class BookRepositoryImpl implements BookRepository {
         return listOfBooks.stream()
                 .filter(bookInfo -> bookInfo.getBookId().equals(bookId))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("도서 ID가 " + bookId + "인 해당 도서를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BookIdException(bookId));
     }
 
     @Override
